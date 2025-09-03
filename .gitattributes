@@ -1,0 +1,202 @@
+# .gitattributes for Vue.js TypeScript Project
+# This file defines attributes for paths to help Git handle files correctly
+
+# Set default behavior to auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Source code files - enforce LF line endings
+*.js text eol=lf
+*.jsx text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.mts text eol=lf
+*.cts text eol=lf
+*.vue text eol=lf
+
+# Stylesheets - enforce LF line endings
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+*.styl text eol=lf
+*.postcss text eol=lf
+
+# Configuration files - enforce LF line endings
+*.json text eol=lf
+*.jsonc text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.xml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.properties text eol=lf
+
+# Documentation files
+*.md text eol=lf
+*.markdown text eol=lf
+*.txt text eol=lf
+*.rst text eol=lf
+
+# HTML and template files
+*.html text eol=lf
+*.htm text eol=lf
+*.hbs text eol=lf
+*.handlebars text eol=lf
+*.mustache text eol=lf
+
+# Shell scripts - must use LF (Unix standard)
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+
+# Windows batch files - must use CRLF for proper execution
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Docker files
+Dockerfile text eol=lf
+*.dockerfile text eol=lf
+.dockerignore text eol=lf
+
+# Git configuration files
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.gitmodules text eol=lf
+
+# Editor configuration files
+.editorconfig text eol=lf
+.vscode/* text eol=lf
+*.code-workspace text eol=lf
+
+# Images - always treat as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.svg text eol=lf
+*.bmp binary
+*.tiff binary
+*.tif binary
+*.avif binary
+
+# Web fonts - always treat as binary
+*.eot binary
+*.otf binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+# Audio/Video files - always treat as binary
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+*.mov binary
+*.avi binary
+*.mkv binary
+
+# Archive files - always treat as binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.7z binary
+*.rar binary
+
+# Documents - always treat as binary
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+
+# Generated/Lock files - use merge strategies to prevent conflicts
+package-lock.json merge=union
+yarn.lock merge=union
+pnpm-lock.yaml merge=union
+composer.lock merge=union
+
+# Build output and generated files - treat as binary to avoid noise in diffs
+dist/** binary
+build/** binary
+coverage/** binary
+*.min.js binary
+*.min.css binary
+*.bundle.js binary
+*.bundle.css binary
+
+# GitHub Linguist attributes - control language detection and statistics
+# Documentation files - don't count towards language statistics
+*.md linguist-documentation
+*.markdown linguist-documentation
+*.txt linguist-documentation
+README* linguist-documentation
+CHANGELOG* linguist-documentation
+CONTRIBUTING* linguist-documentation
+LICENSE* linguist-documentation
+docs/** linguist-documentation
+
+# Vendor/third-party files - don't count towards language statistics
+node_modules/** linguist-vendored
+vendor/** linguist-vendored
+lib/** linguist-vendored
+libs/** linguist-vendored
+public/assets/** linguist-vendored
+src/assets/** linguist-vendored
+
+# Generated files - don't count towards language statistics
+dist/** linguist-generated=true
+build/** linguist-generated=true
+coverage/** linguist-generated=true
+*.min.* linguist-generated=true
+*.bundle.* linguist-generated=true
+
+# Configuration files - don't count heavily towards language statistics
+*.json linguist-language=JSON
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.xml linguist-language=XML
+*.toml linguist-language=TOML
+
+# Force correct language detection
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.vue linguist-language=Vue
+
+# Test files - reduce weight in language detection but don't exclude completely
+**/*.test.* linguist-detectable=false
+**/*.spec.* linguist-detectable=false
+**/*.cy.* linguist-detectable=false
+cypress/** linguist-detectable=false
+
+# Export-ignore - exclude from git archive (for releases)
+.github/ export-ignore
+.vscode/ export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+.editorconfig export-ignore
+.eslintrc.* export-ignore
+.prettierrc.* export-ignore
+cypress.config.* export-ignore
+vitest.config.* export-ignore
+bitbucket-pipelines.yml export-ignore
+sonar-project.properties export-ignore
+*.test.* export-ignore
+*.spec.* export-ignore
+*.cy.* export-ignore
+cypress/ export-ignore
+coverage/ export-ignore
+node_modules/ export-ignore
+
+# Files that shouldn't be merged automatically during conflicts
+# (force manual resolution)
+package.json merge=manual
+tsconfig*.json merge=manual
+vite.config.* merge=manual
+vitest.config.* merge=manual
+cypress.config.* merge=manual

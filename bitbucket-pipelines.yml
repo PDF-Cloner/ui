@@ -1,0 +1,127 @@
+image: cypress/included:15.1.0
+
+clone:
+  depth: full # SonarCloud needs the full history to assign issues properly
+
+definitions:
+  services:
+    docker:
+      memory: 3072 # Allocate 3 GB to the docker service
+
+  steps:
+    - step: &Install-Dependencies
+        name: Install Dependencies
+        caches:
+          - node
+        script:
+          - npm install
+
+    - step: &Format-Code
+        name: Format Code
+        caches:
+          - node
+        script:
+          - npm run format
+
+    - step: &Lint-Code
+        name: Lint Code
+        caches:
+          - node
+        script:
+          - npm run lint
+
+    - step: &Type-Check
+        name: Type Check
+        caches:
+          - node
+        script:
+          - npm run type-check
+
+    - step: &UT-Coverage
+        name: Unit Tests with Coverage
+        caches:
+          - node
+        script:
+          - npm run test:ut:coverage
+
+    - step: &IT-Coverage
+        name: Integration Tests with Coverage
+        caches:
+          - node
+        script:
+          - npm run test:it
+
+    - step: &E2E-Coverage
+        name: End to End Testing with Coverage
+        caches:
+          - node
+        script:
+          - npm run prepare
+          - npm run test:e2e
+
+    - step: &SonarCloud-Scan
+        name: SonarCloud Scan
+        caches:
+          - node
+        services:
+          - docker
+        script:
+          - pipe: sonarsource/sonarcloud-scan:4.0.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
+
+    - step: &Quality-Gate
+        name: Quality Gate
+        caches:
+          - node
+        script:
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+
+pipelines:
+  default:
+    - step: *build-test-sonar
+
+    - step: *Install-Dependencies
+    - step: *Format-Code
+    - step: *Lint-Code
+    - step: *Type-Check
+    - step: *UT-Coverage
+    - step: *IT-Coverage
+    - step: *E2E-Coverage
+    - step: *SonarCloud-Scan
+    - step: *Quality-Gate
+
+  branches:
+    'master':
+      - step: *Install-Dependencies
+      - step: *Format-Code
+      - step: *Lint-Code
+      - step: *Type-Check
+      - step: *UT-Coverage
+      - step: *IT-Coverage
+      - step: *E2E-Coverage
+      - step: *SonarCloud-Scan
+      - step: *Quality-Gate
+      - step:
+          name: Build for Production
+          script:
+            - npm run build
+          artifacts:
+            - dist/**
+
+  pull-requests:
+    '**':
+      - step: *build-test-sonar
+
+      - step: *Install-Dependencies
+      - step: *Format-Code
+      - step: *Lint-Code
+      - step: *Type-Check
+      - step: *UT-Coverage
+      - step: *IT-Coverage
+      - step: *E2E-Coverage
+      - step: *SonarCloud-Scan
+      - step: *Quality-Gate

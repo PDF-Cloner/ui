@@ -1,0 +1,107 @@
+# EditorConfig is awesome: https://EditorConfig.org
+# This is the top-most EditorConfig file
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# JavaScript, TypeScript, Vue.js, and CSS files
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+quote_type = single
+
+# CSS and related files
+[*.{css,scss,sass,less,styl,postcss}]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# JSON files (including package.json, tsconfig.json, etc.)
+[*.{json,jsonc}]
+indent_style = space
+indent_size = 2
+max_line_length = 200
+
+# HTML and template files
+[*.{html,htm,hbs,handlebars}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# YAML files (GitHub Actions, Docker Compose, etc.)
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+trim_trailing_whitespace = true
+
+# XML files
+[*.{xml,svg}]
+indent_style = space
+indent_size = 2
+
+# Markdown files
+[*.{md,markdown}]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Configuration files with specific requirements
+[{package.json,.travis.yml,.github/workflows/*.yml}]
+indent_style = space
+indent_size = 2
+
+# Makefiles require tabs
+[{Makefile,makefile,*.mk}]
+indent_style = tab
+trim_trailing_whitespace = true
+
+# Shell scripts
+[*.{sh,bash,zsh}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# Docker files
+[{Dockerfile,*.dockerfile}]
+indent_style = space
+indent_size = 4
+
+# .env files
+[*.env*]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
+# Test files with specific settings - INCLUDING CYPRESS FILES
+[*.{spec,test,cy}.{js,jsx,ts,tsx,vue}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Config files that might have longer lines
+[*.config.{js,ts}]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+
+# Properties files (sonar-project.properties, application.properties, etc.)
+[*.properties]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+trim_trailing_whitespace = true
+
+# INI files (similar to properties files)
+[*.ini]
+indent_style = space
+indent_size = 2
+max_line_length = 120
+trim_trailing_whitespace = true
