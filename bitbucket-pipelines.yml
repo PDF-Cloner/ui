@@ -35,7 +35,7 @@ definitions:
         caches:
           - node
         script:
-          - npm run type-check --extendedDiagnostics
+          - npm run type-check
 
     - step: &UT-Coverage
         name: Unit Tests with Coverage
