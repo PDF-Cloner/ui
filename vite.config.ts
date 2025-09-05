@@ -31,7 +31,7 @@ export default defineConfig({
       //   'vite.config.*',
       //   'vitest.config.*',
       //   'cypress.config.*'
-      // ],
+      ],
       // include: ['src/**/*.{js,ts,vue}'],
     }
   }
