@@ -25,26 +25,29 @@ definitions:
 
     - step: &Lint-Code
         name: Lint Code
+        caches:
+          - node
         script:
           - npm run lint
 
     - step: &Type-Check
         name: Type Check
+        caches:
+          - node
         script:
           - npm run type-check
 
     - step: &UT-Coverage
         name: Unit Tests with Coverage
+        caches:
+          - node
         script:
           - npm run test:coverage
 
-    - step: &Prepare-Cypress
-        name: Prepare Cypress
-        script:
-          - npm run prepare
-
     - step: &E2E-Headless
         name: E2E in Interactive Mode
+        caches:
+          - node
         script:
           - npm run test:e2e:dev
 
@@ -62,6 +65,8 @@ definitions:
 
     - step: &Quality-Gate
         name: Quality Gate
+        caches:
+          - node
         script:
           - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
             variables:
@@ -74,7 +79,6 @@ pipelines:
     - step: *Lint-Code
     - step: *Type-Check
     - step: *UT-Coverage
-    - step: *Prepare-Cypress
     - step: *E2E-Headless
     - step: *SonarCloud-Scan
     - step: *Quality-Gate
@@ -86,7 +90,6 @@ pipelines:
       - step: *Lint-Code
       - step: *Type-Check
       - step: *UT-Coverage
-      - step: *Prepare-Cypress
       - step: *E2E-Headless
       - step: *SonarCloud-Scan
       - step: *Quality-Gate
@@ -104,7 +107,6 @@ pipelines:
       - step: *Lint-Code
       - step: *Type-Check
       - step: *UT-Coverage
-      - step: *Prepare-Cypress
       - step: *E2E-Headless
       - step: *SonarCloud-Scan
       - step: *Quality-Gate
