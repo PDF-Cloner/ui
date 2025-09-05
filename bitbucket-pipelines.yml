@@ -4,6 +4,8 @@ clone:
   depth: full  # SonarCloud needs the full history to assign issues properly
 
 definitions:
+  caches:
+    custom-cypress-cache: /root/.cache/Cypress
   services:
     docker:
       memory: 3072  # Allocate 3 GB to the docker service
@@ -48,6 +50,7 @@ definitions:
         name: E2E in Interactive Mode
         caches:
           - node
+          - custom-cypress-cache
         script:
           - npm run test:e2e:dev
 
