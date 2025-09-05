@@ -1,0 +1,40 @@
+image: node:20
+
+clone:
+  depth: full  # SonarCloud needs the full history to assign issues properly
+
+definitions:
+  steps:
+    - step: &build-test-sonar
+        name: Build, Test and Analyze
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run test:coverage
+          - pipe: sonarsource/sonarcloud-scan:4.0.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+
+pipelines:
+  default:
+    - step: *build-test-sonar
+  
+  branches:
+    main:
+      - step: *build-test-sonar
+      - step:
+          name: Build for Production
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - dist/**
+
+  pull-requests:
+    '**':
+      - step: *build-test-sonar
