@@ -21,35 +21,35 @@ definitions:
         caches:
           - node
         script:
-          - npm run format --verbose
+          - npm run format --debug-check
 
     - step: &Lint-Code
         name: Lint Code
         caches:
           - node
         script:
-          - npm run lint --verbose
+          - npm run lint
 
     - step: &Type-Check
         name: Type Check
         caches:
           - node
         script:
-          - npm run type-check --verbose
+          - npm run type-check --extendedDiagnostics
 
     - step: &UT-Coverage
         name: Unit Tests with Coverage
         caches:
           - node
         script:
-          - npm run test:coverage --verbose
+          - npm run test:coverage
 
     - step: &E2E-Headless
         name: E2E in Interactive Mode
         caches:
           - node
         script:
-          - npm run test:e2e:dev --verbose
+          - npm run test:e2e:dev
 
     - step: &SonarCloud-Scan
         name: SonarCloud Scan
