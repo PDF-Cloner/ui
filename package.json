@@ -17,7 +17,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "sonar": "sonar-sanner",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "pinia": "^3.0.3",
@@ -43,6 +45,7 @@
     "jsdom": "^26.1.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.6.2",
+    "sonar-scanner": "^3.1.0",
     "start-server-and-test": "^2.0.12",
     "stylus": "^0.64.0",
     "stylus-loader": "^8.1.2",
