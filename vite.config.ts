@@ -20,7 +20,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     coverage: {
-      reporter: ['text', 'json', 'html', 'xml'],
+      reporter: ['text', 'json', 'html', 'xml', 'Icov'],
       provider: 'v8',
       exclude: [
         'node_modules/',
