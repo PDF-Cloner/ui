@@ -19,6 +19,9 @@ definitions:
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
               EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
+    - step:
+        name: SonarCloud Quality Gate
+        script:
           - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
