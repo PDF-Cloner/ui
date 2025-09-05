@@ -14,7 +14,10 @@ definitions:
         caches:
           - node
         script:
-          - npm install
+          - set -x
+          - echo "Starting npm install..."
+          - npm install --verbose
+          - set +x
 
     - step: &Format-Code
         name: Format Code
