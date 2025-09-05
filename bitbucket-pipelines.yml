@@ -10,26 +10,26 @@ definitions:
 
   steps:
     - step: &Install-Dependencies
-      name: Install Dependencies
-      caches:
-        - node
-      script:
-        - npm install
+        name: Install Dependencies
+        caches:
+          - node
+        script:
+          - npm install
 
     - step: &Format-Code
-      name: Format Code
-      script:
-        - npm run format
+        name: Format Code
+        script:
+          - npm run format
 
     - step: &Lint-Code
-      name: Lint Code
-      script:
-        - npm run lint
+        name: Lint Code
+        script:
+          - npm run lint
 
     - step: &Type-Check
-      name: Type Check
-      script:
-        - npm run type-check
+        name: Type Check
+        script:
+          - npm run type-check
 
     - step: &UT-Coverage
         name: Unit Tests with Coverage
@@ -47,23 +47,23 @@ definitions:
           - npm run test:e2e:dev
 
     - step: &SonarCloud-Scan
-      name: SonarCloud Scan
-      caches:
-        - node
-      services:
-        - docker
-      script:
-        - pipe: sonarsource/sonarcloud-scan:4.0.0
-          variables:
-            SONAR_TOKEN: ${SONAR_TOKEN}
-            EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
+        name: SonarCloud Scan
+        caches:
+          - node
+        services:
+          - docker
+        script:
+          - pipe: sonarsource/sonarcloud-scan:4.0.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
 
     - step: &Quality-Gate
-      name: Quality Gate
-      script:
-        - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
-          variables:
-            SONAR_TOKEN: ${SONAR_TOKEN}
+        name: Quality Gate
+        script:
+          - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
 
 pipelines:
   default:
