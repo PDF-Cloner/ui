@@ -18,6 +18,8 @@ definitions:
 
     - step: &Format-Code
         name: Format Code
+        caches:
+          - node
         script:
           - npm run format
 
