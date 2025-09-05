@@ -1,4 +1,4 @@
-image: node:20
+image: node:latest
 
 clone:
   depth: full  # SonarCloud needs the full history to assign issues properly
@@ -7,40 +7,102 @@ definitions:
   services:
     docker:
       memory: 3072  # Allocate 3 GB to the docker service
+
   steps:
-    - step: &build-test-sonar
-        name: Build, Test and Analyze
-        caches:
-          - node
+    - step: &Install-Dependencies
+      name: Install Dependencies
+      caches:
+        - node
+      script:
+        - npm install
+
+    - step: &Format-Code
+      name: Format Code
+      script:
+        - npm run format
+
+    - step: &Lint-Code
+      name: Lint Code
+      script:
+        - npm run lint
+
+    - step: &Type-Check
+      name: Type Check
+      script:
+        - npm run type-check
+
+    - step: &UT-Coverage
+        name: Unit Tests with Coverage
         script:
-          - npm install
           - npm run test:coverage
-          - pipe: sonarsource/sonarcloud-scan:4.0.0
-            variables:
-              SONAR_TOKEN: ${SONAR_TOKEN}
-              EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
-    - step:
-        name: SonarCloud Quality Gate
+
+    - step: &Prepare-Cypress
+        name: Prepare Cypress
         script:
-          - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
-            variables:
-              SONAR_TOKEN: ${SONAR_TOKEN}
+          - npm run prepare
+
+    - step: &E2E-Headless
+        name: E2E in Interactive Mode
+        script:
+          - npm run test:e2e:dev
+
+    - step: &SonarCloud-Scan
+      name: SonarCloud Scan
+      caches:
+        - node
+      services:
+        - docker
+      script:
+        - pipe: sonarsource/sonarcloud-scan:4.0.0
+          variables:
+            SONAR_TOKEN: ${SONAR_TOKEN}
+            EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
+
+    - step: &Quality-Gate
+      name: Quality Gate
+      script:
+        - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
+          variables:
+            SONAR_TOKEN: ${SONAR_TOKEN}
 
 pipelines:
   default:
-    - step: *build-test-sonar
+    - step: *Install-Dependencies
+    - step: *Format-Code
+    - step: *Lint-Code
+    - step: *Type-Check
+    - step: *UT-Coverage
+    - step: *Prepare-Cypress
+    - step: *E2E-Headless
+    - step: *SonarCloud-Scan
+    - step: *Quality-Gate
   
   branches:
-    main:
-      - step: *build-test-sonar
+    '**':
+      - step: *Install-Dependencies
+      - step: *Format-Code
+      - step: *Lint-Code
+      - step: *Type-Check
+      - step: *UT-Coverage
+      - step: *Prepare-Cypress
+      - step: *E2E-Headless
+      - step: *SonarCloud-Scan
+      - step: *Quality-Gate
       - step:
           name: Build for Production
           script:
-            - npm install
             - npm run build
           artifacts:
             - dist/**
 
   pull-requests:
     '**':
-      - step: *build-test-sonar
+      - step: *Install-Dependencies
+      - step: *Format-Code
+      - step: *Lint-Code
+      - step: *Type-Check
+      - step: *UT-Coverage
+      - step: *Prepare-Cypress
+      - step: *E2E-Headless
+      - step: *SonarCloud-Scan
+      - step: *Quality-Gate
