@@ -52,6 +52,7 @@ definitions:
           - node
           - custom-cypress-cache
         script:
+          - npm run prepare
           - npm run test:e2e:dev
 
     - step: &SonarCloud-Scan
