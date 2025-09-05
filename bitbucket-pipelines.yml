@@ -78,7 +78,7 @@ pipelines:
     - step: *Quality-Gate
   
   branches:
-    '**':
+    'master':
       - step: *Install-Dependencies
       - step: *Format-Code
       - step: *Lint-Code
