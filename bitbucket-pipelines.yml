@@ -15,7 +15,7 @@ definitions:
           - pipe: sonarsource/sonarcloud-scan:4.0.0
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
-              EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui
+              EXTRA_ARGS: -Dsonar.projectKey=pdfcloner_ui -Dsonar.organization=pdfcloner
           - pipe: sonarsource/sonarcloud-quality-gate:0.1.6
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
