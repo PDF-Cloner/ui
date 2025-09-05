@@ -21,7 +21,7 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       all: true,
-      reporter: ['text', 'json', 'html', 'Icov'],
+      reporter: ['text', 'json', 'html'],
       provider: 'v8',
       exclude: [
         'node_modules/',
