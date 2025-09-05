@@ -14,14 +14,14 @@ definitions:
         caches:
           - node
         script:
-          - npm install --verbose
+          - npm install
 
     - step: &Format-Code
         name: Format Code
         caches:
           - node
         script:
-          - npm run format --debug-check
+          - npm run format
 
     - step: &Lint-Code
         name: Lint Code
