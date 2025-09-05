@@ -4,6 +4,9 @@ clone:
   depth: full  # SonarCloud needs the full history to assign issues properly
 
 definitions:
+  services:
+    docker:
+      memory: 3072  # Allocate 3 GB to the docker service
   steps:
     - step: &build-test-sonar
         name: Build, Test and Analyze
