@@ -14,45 +14,42 @@ definitions:
         caches:
           - node
         script:
-          - set -x
-          - echo "Starting npm install..."
           - npm install --verbose
-          - set +x
 
     - step: &Format-Code
         name: Format Code
         caches:
           - node
         script:
-          - npm run format
+          - npm run format --verbose
 
     - step: &Lint-Code
         name: Lint Code
         caches:
           - node
         script:
-          - npm run lint
+          - npm run lint --verbose
 
     - step: &Type-Check
         name: Type Check
         caches:
           - node
         script:
-          - npm run type-check
+          - npm run type-check --verbose
 
     - step: &UT-Coverage
         name: Unit Tests with Coverage
         caches:
           - node
         script:
-          - npm run test:coverage
+          - npm run test:coverage --verbose
 
     - step: &E2E-Headless
         name: E2E in Interactive Mode
         caches:
           - node
         script:
-          - npm run test:e2e:dev
+          - npm run test:e2e:dev --verbose
 
     - step: &SonarCloud-Scan
         name: SonarCloud Scan
