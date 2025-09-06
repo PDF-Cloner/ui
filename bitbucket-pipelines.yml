@@ -1,12 +1,12 @@
 image: cypress/included:15.1.0
 
 clone:
-  depth: full  # SonarCloud needs the full history to assign issues properly
+  depth: full # SonarCloud needs the full history to assign issues properly
 
 definitions:
   services:
     docker:
-      memory: 3072  # Allocate 3 GB to the docker service
+      memory: 3072 # Allocate 3 GB to the docker service
 
   steps:
     - step: &Install-Dependencies
@@ -42,15 +42,22 @@ definitions:
         caches:
           - node
         script:
-          - npm run test:coverage
+          - npm run test:ut:coverage
 
-    - step: &E2E-Headless
-        name: E2E in Interactive Mode
+    - step: &IT-Coverage
+        name: Integration Tests with Coverage
+        caches:
+          - node
+        script:
+          - npm run test:it
+
+    - step: &E2E-Coverage
+        name: End to End Testing with Coverage
         caches:
           - node
         script:
           - npm run prepare
-          - npm run test:e2e:dev
+          - npm run test:e2e
 
     - step: &SonarCloud-Scan
         name: SonarCloud Scan
@@ -80,10 +87,11 @@ pipelines:
     - step: *Lint-Code
     - step: *Type-Check
     - step: *UT-Coverage
-    - step: *E2E-Headless
+    - step: *IT-Coverage
+    - step: *E2E-Coverage
     - step: *SonarCloud-Scan
     - step: *Quality-Gate
-  
+
   branches:
     'master':
       - step: *Install-Dependencies
@@ -91,7 +99,8 @@ pipelines:
       - step: *Lint-Code
       - step: *Type-Check
       - step: *UT-Coverage
-      - step: *E2E-Headless
+      - step: *IT-Coverage
+      - step: *E2E-Coverage
       - step: *SonarCloud-Scan
       - step: *Quality-Gate
       - step:
@@ -108,6 +117,7 @@ pipelines:
       - step: *Lint-Code
       - step: *Type-Check
       - step: *UT-Coverage
-      - step: *E2E-Headless
+      - step: *IT-Coverage
+      - step: *E2E-Coverage
       - step: *SonarCloud-Scan
       - step: *Quality-Gate
